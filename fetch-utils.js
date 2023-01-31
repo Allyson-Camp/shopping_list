@@ -27,3 +27,46 @@ export async function signOutUser() {
 }
 
 /* Data functions */
+export async function createItem(item, quantity) {
+    const response = await client
+        .from('shopping_list')
+        .insert([
+            { item: item,
+                quantity: quantity },
+        ]);
+    return checkError(response);
+}
+
+export async function deleteItems(id) {
+    const response = await client
+        .from('shopping_list')
+        .delete()
+        .match({ user_id: getUser(id).id });
+
+    return checkError(response);
+}
+
+export async function getItems() {
+    let response = await client
+        .from('shopping_list')
+        .select('*');
+
+    return checkError(response);
+}
+
+export async function completeItem(id) {
+//in supabase??????
+}
+
+export function checkAuth() {
+    const user = getUser();
+
+    if (!user) location.replace('../auth');
+}
+
+// export function redirectIfLoggedIn() {
+//     const user = getUser();
+//     if (user) {
+//         location.replace('./');
+//     }
+// }

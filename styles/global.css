@@ -69,3 +69,11 @@ main {
 .hidden {
     display: none;
 }
+
+.purchased {
+text-decoration: line-through;
+}
+
+.not-purchased {
+text-decoration: none;
+}

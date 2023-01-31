@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <!-- title and favicon -->
-    <title>Supabase Web App</title>
+    <title>MyList</title>
     <link rel="icon" type="image/x-icon" href="/assets/alchemy-favicon.png" />
 
     <!-- js -->
@@ -32,7 +32,7 @@
 <body>
     <header class="page-header">
         <img class="logo" src="/assets/html_css_js.png" alt="logo">
-        <p class="title">Supabase Web App</p>
+        <p class="title">MyList</p>
         <nav>
             <a href="/">Home</a>
             <a id="sign-out-link" href="auth">Sign Out</a>
@@ -40,7 +40,21 @@
     </header>
 
     <main>
-
+        <!-- <form class="list-form">
+            <input name="item" required />
+            <button>Add item</button>
+        </form>
+        <button class="delete-button">Delete all items</button>
+        <div class="items"></div> -->
+        <form class="list-form">
+            Item
+            <input name="item" required />
+            Quantity
+            <input type="number" name="quantitiy" required />
+            <button id="add-button">Add item</button>
+        </form>
+        <button class="delete-button">Delete all items</button>
+        <div class="items"></div>
     </main>
 
 </body>
