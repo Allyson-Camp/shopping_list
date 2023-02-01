@@ -70,3 +70,7 @@ export function checkAuth() {
 //         location.replace('./');
 //     }
 // }
+
+function checkError({ data, error }) {
+    return error ? console.error(error) : data;
+}

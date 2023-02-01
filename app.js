@@ -1,8 +1,10 @@
 /* Imports */
-import { getItems, signOutUser, createItem, completeItem } from './fetch-utils.js';
+import { getItems, signOutUser, createItem, completeItem, deleteItems, checkAuth } from './fetch-utils.js';
 import { renderItem } from './render-utils.js';
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
+
+checkAuth(); 
 
 /* Get DOM Elements */
 const listFormEl = document.querySelector('.list-form');
@@ -14,27 +16,32 @@ const logoutButtonEl = document.getElementById('sign-out-link');
 let itemsArray = [];
 
 /* Events */
-// window.addEventListener('load', async () => {
-
-// });
-
-listFormEl.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const data = FormData(listFormEl);
-
-    const newItem = data.get('item', 'quantity');
-    await createItem();
-
+window.addEventListener('load', async () => {
+    const items = await getItems();
+    itemsArray = items;
     displayItems();
 });
 
-// deleteButtonEl.addEventListener('click', async () => {
+listFormEl.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(listFormEl);
 
-// });
+    await createItem(data.get('item'), data.get('quantity'));
 
-// logoutButtonEl.addEventListener('click', () => {
-//     signOutUser();
-// });
+    displayItems();
+
+    listFormEl.reset();
+});
+
+deleteButtonEl.addEventListener('click', async () => {
+    displayItems();
+    await deleteItems();
+});
+
+logoutButtonEl.addEventListener('click', () => {
+    signOutUser();
+});
+
 /* Display Functions */
 async function displayItems(){
     itemsEl.textContent = '';
@@ -46,14 +53,9 @@ async function displayItems(){
         const itemsAdded = renderItem(item);
 
         itemsAdded.addEventListener('click', async () => {
-            // await completeItem(arguement?????)
+            await completeItem(item.id);
             displayItems();
         });
+        listFormEl.append(itemsAdded);
     }
-    //loop through items
-    // for each todo, render a new todo DOM element using your render function
-        // then add an event listener to each todo
-            // on click, update the todo in supabase
-            // then (shockingly!) call displayTodos() to refresh the list
-        // append the rendered todo DOM element to the todosEl
 }
